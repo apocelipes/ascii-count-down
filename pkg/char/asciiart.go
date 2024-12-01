@@ -1,7 +1,5 @@
 package char
 
-import "time"
-
 var ASCIIArtChars = [][]string{
 	{
 		`  ___  `,
@@ -105,28 +103,4 @@ func MaxASCIIArtCharWidth() int {
 
 func MaxASCIIArtCharHeight() int {
 	return len(ASCIIArtChars[0])
-}
-
-func ConvertToASCIIArtChars(d time.Duration, chars [][]string) [][]string {
-	hour := d / time.Hour
-	if hour < 10 {
-		chars = append(chars, ASCIIArtChars[0], ASCIIArtChars[hour])
-	} else {
-		chars = append(chars, ASCIIArtChars[hour/10], ASCIIArtChars[hour%10])
-	}
-	d -= hour * time.Hour
-	minute := d / time.Minute
-	if minute < 10 {
-		chars = append(chars, ASCIIArtChars[0], ASCIIArtChars[minute])
-	} else {
-		chars = append(chars, ASCIIArtChars[minute/10], ASCIIArtChars[minute%10])
-	}
-	d -= minute * time.Minute
-	second := d / time.Second
-	if second < 10 {
-		chars = append(chars, ASCIIArtChars[0], ASCIIArtChars[second])
-	} else {
-		chars = append(chars, ASCIIArtChars[second/10], ASCIIArtChars[second%10])
-	}
-	return chars
 }

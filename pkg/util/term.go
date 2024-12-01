@@ -1,6 +1,12 @@
 package util
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+	"os"
+
+	"golang.org/x/term"
+)
 
 func CursorUp(line int) {
 	fmt.Printf("\033[%dF", line)
@@ -16,4 +22,22 @@ func CursorForward(line int) {
 
 func CursorEraseLine() {
 	fmt.Print("\033[2K")
+}
+
+func CheckTerminal(fd, maxWidth, maxHeight int) error {
+	if !term.IsTerminal(int(os.Stdout.Fd())) {
+		return errors.New("output should be a terminal")
+	}
+	width, height, err := term.GetSize(int(os.Stdout.Fd()))
+	if err != nil {
+		return err
+	}
+
+	if maxWidth > width {
+		return fmt.Errorf("no enough width, got: %d, want: %d", width, maxWidth)
+	}
+	if maxHeight > height {
+		return fmt.Errorf("no enough height, got: %d, want: %d", height, maxHeight)
+	}
+	return nil
 }

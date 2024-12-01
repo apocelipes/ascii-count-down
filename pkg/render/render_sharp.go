@@ -1,15 +1,12 @@
 package render
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"time"
 
 	"github.com/apocelips/ascii-count-down/pkg/char"
 	"github.com/apocelips/ascii-count-down/pkg/util"
-
-	"golang.org/x/term"
 )
 
 type SharpCharRender struct {
@@ -23,7 +20,7 @@ func NewSharpCharRender() *SharpCharRender {
 }
 
 func (sr *SharpCharRender) RenderContent(duration time.Duration) {
-	sr.chars = char.ConvertToSharpChars(duration, sr.chars)
+	sr.chars = char.ConvertToChars(duration, char.SharpChars, sr.chars)
 	// 等宽，不需要清除整行
 	for i := 0; i < char.MaxSharpCharHeight(); i++ {
 		fmt.Print(sr.chars[0][i])
@@ -62,23 +59,10 @@ func (sr *SharpCharRender) RenderFlashing() {
 }
 
 func (sr *SharpCharRender) CanRender() error {
-	if !term.IsTerminal(int(os.Stdout.Fd())) {
-		return errors.New("output should be a terminal")
-	}
-	width, height, err := term.GetSize(int(os.Stdout.Fd()))
-	if err != nil {
-		panic(err)
-	}
 	// 00:00:00, 6 digits, 2 colons, digit space width 1
 	maxWidth := char.MaxSharpCharWidth()*6 + 8*2 + 3
 	maxHeight := char.MaxSharpCharHeight()
-	if maxWidth > width {
-		return fmt.Errorf("no enough width, got: %d, want: %d", width, maxWidth)
-	}
-	if maxHeight > height {
-		return fmt.Errorf("no enough height, got: %d, want: %d", height, maxHeight)
-	}
-	return nil
+	return util.CheckTerminal(int(os.Stdout.Fd()), maxWidth, maxHeight)
 }
 
 func (sr *SharpCharRender) RenderHeight() int {
