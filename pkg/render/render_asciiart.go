@@ -25,7 +25,7 @@ func (ar *ASCIIArtCharRender) RenderContent(duration time.Duration) {
 	}
 	ar.chars = char.ConvertToChars(duration, char.ASCIIArtChars, ar.chars)
 	for i := 0; i < char.MaxASCIIArtCharHeight(); i++ {
-		util.CursorEraseLine()
+		util.CursorEraseEntireLine()
 		fmt.Print(ar.chars[0][i])
 		fmt.Print(" ")
 		fmt.Print(ar.chars[1][i])
@@ -46,24 +46,20 @@ func (ar *ASCIIArtCharRender) RenderContent(duration time.Duration) {
 }
 
 func (ar *ASCIIArtCharRender) RenderFlashing() {
-	util.CursorDown(1)
-	util.CursorForward(3 + len(ar.chars[0][0]) + 1 + len(ar.chars[1][0]))
+	util.CursorDownForward(1, 3+len(ar.chars[0][0])+1+len(ar.chars[1][0]))
 	fmt.Print(" ")
 	util.CursorForward(3 + len(ar.chars[2][0]) + 1 + len(ar.chars[3][0]) + 3)
 	fmt.Print(" ")
-	util.CursorDown(1)
-	util.CursorForward(2 + len(ar.chars[0][0]) + 1 + len(ar.chars[1][0]))
+	util.CursorDownForward(1, 2+len(ar.chars[0][0])+1+len(ar.chars[1][0]))
 	fmt.Print("   ")
 	util.CursorForward(2 + len(ar.chars[2][0]) + 1 + len(ar.chars[3][0]) + 2)
 	fmt.Print("   ")
 
-	util.CursorDown(2)
-	util.CursorForward(3 + len(ar.chars[0][0]) + 1 + len(ar.chars[1][0]))
+	util.CursorDownForward(2, 3+len(ar.chars[0][0])+1+len(ar.chars[1][0]))
 	fmt.Print(" ")
 	util.CursorForward(3 + len(ar.chars[2][0]) + 1 + len(ar.chars[3][0]) + 3)
 	fmt.Print(" ")
-	util.CursorDown(1)
-	util.CursorForward(2 + len(ar.chars[0][0]) + 1 + len(ar.chars[1][0]))
+	util.CursorDownForward(1, 2+len(ar.chars[0][0])+1+len(ar.chars[1][0]))
 	fmt.Print("   ")
 	util.CursorForward(2 + len(ar.chars[2][0]) + 1 + len(ar.chars[3][0]) + 2)
 	fmt.Print("   ")

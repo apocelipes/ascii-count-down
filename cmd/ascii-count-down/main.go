@@ -62,23 +62,23 @@ func main() {
 		until = now.Add(duration)
 	}
 
-	splash := false
-	start := false
+	flashing := false
+	started := false
 
 	fmt.Println()
 	for now.Before(until) {
-		if start {
+		if started {
 			util.CursorUp(terminalRender.RenderHeight())
 		}
-		start = true
-		if splash {
+		started = true
+		if flashing {
 			terminalRender.RenderFlashing()
 		} else {
 			duration := until.Sub(now).Truncate(time.Second)
 			terminalRender.RenderContent(duration)
 		}
 
-		splash = !splash
+		flashing = !flashing
 		now = time.Now()
 		time.Sleep(500 * time.Millisecond)
 	}

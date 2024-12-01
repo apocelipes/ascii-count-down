@@ -20,7 +20,11 @@ func CursorForward(line int) {
 	fmt.Printf("\033[%dC", line)
 }
 
-func CursorEraseLine() {
+func CursorDownForward(line, char int) {
+	fmt.Printf("\033[%dE\033[%dC", line, char)
+}
+
+func CursorEraseEntireLine() {
 	fmt.Print("\033[2K")
 }
 

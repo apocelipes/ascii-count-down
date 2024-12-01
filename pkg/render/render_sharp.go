@@ -44,13 +44,11 @@ func (sr *SharpCharRender) RenderContent(duration time.Duration) {
 }
 
 func (sr *SharpCharRender) RenderFlashing() {
-	util.CursorDown(1)
-	util.CursorForward(20)
+	util.CursorDownForward(1, 20)
 	fmt.Print("  ")
 	util.CursorForward(23)
 	fmt.Print("  ")
-	util.CursorDown(4)
-	util.CursorForward(20)
+	util.CursorDownForward(4, 20)
 	fmt.Print("  ")
 	util.CursorForward(23)
 	fmt.Print("  ")
