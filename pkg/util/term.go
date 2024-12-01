@@ -45,3 +45,7 @@ func CheckTerminal(fd, maxWidth, maxHeight int) error {
 	}
 	return nil
 }
+
+func PrintlnRed(s string) {
+	fmt.Printf("\033[31m%s\033[0m\n", s)
+}

@@ -3,6 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/apocelips/ascii-count-down/pkg/render"
@@ -64,12 +67,17 @@ func main() {
 
 	flashing := false
 	started := false
+	sigs := make(chan os.Signal, 1)
+	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 
-	fmt.Println()
+	ticker := time.NewTicker(500 * time.Millisecond)
+
+	fmt.Printf("距离 %s 还有: \n\n", until.Format("2006-01-02 15:04:05"))
 	for now.Before(until) {
 		if started {
 			util.CursorUp(terminalRender.RenderHeight())
 		}
+
 		started = true
 		if flashing {
 			terminalRender.RenderFlashing()
@@ -80,6 +88,13 @@ func main() {
 
 		flashing = !flashing
 		now = time.Now()
-		time.Sleep(500 * time.Millisecond)
+		select {
+		case <-sigs:
+			util.CursorUp(terminalRender.RenderHeight())
+			terminalRender.RenderContent(0)
+			util.PrintlnRed("\ncount down canceled")
+			os.Exit(0)
+		case <-ticker.C:
+		}
 	}
 }

@@ -70,7 +70,7 @@ func (ar *ASCIIArtCharRender) RenderFlashing() {
 func (ar *ASCIIArtCharRender) CanRender() error {
 	// 00:00:00, 6 digits, 2 colons, digit space width 1
 	maxWidth := char.MaxASCIIArtCharWidth()*6 + 7*2 + 3
-	maxHeight := char.MaxASCIIArtCharHeight()
+	maxHeight := char.MaxASCIIArtCharHeight() + 2 // +2 for the prompt
 	return util.CheckTerminal(int(os.Stdout.Fd()), maxWidth, maxHeight)
 }
 

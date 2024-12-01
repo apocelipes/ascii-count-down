@@ -59,7 +59,7 @@ func (sr *SharpCharRender) RenderFlashing() {
 func (sr *SharpCharRender) CanRender() error {
 	// 00:00:00, 6 digits, 2 colons, digit space width 1
 	maxWidth := char.MaxSharpCharWidth()*6 + 8*2 + 3
-	maxHeight := char.MaxSharpCharHeight()
+	maxHeight := char.MaxSharpCharHeight() + 2 // +2 for the prompt
 	return util.CheckTerminal(int(os.Stdout.Fd()), maxWidth, maxHeight)
 }
 
