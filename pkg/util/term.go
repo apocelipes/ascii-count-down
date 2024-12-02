@@ -28,6 +28,14 @@ func CursorEraseEntireLine() {
 	fmt.Print("\033[2K")
 }
 
+func CursorHide() {
+	fmt.Print("\033[?25l")
+}
+
+func CursorShow() {
+	fmt.Print("\033[?25h")
+}
+
 func CheckTerminal(fd, maxWidth, maxHeight int) error {
 	if !term.IsTerminal(int(os.Stdout.Fd())) {
 		return errors.New("output should be a terminal")
