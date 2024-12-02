@@ -1,4 +1,4 @@
-module github.com/apocelips/ascii-count-down
+module github.com/apocelipes/ascii-count-down
 
 go 1.22
 

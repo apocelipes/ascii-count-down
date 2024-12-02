@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/apocelips/ascii-count-down/pkg/char"
-	"github.com/apocelips/ascii-count-down/pkg/util"
+	"github.com/apocelipes/ascii-count-down/pkg/char"
+	"github.com/apocelipes/ascii-count-down/pkg/util"
 )
 
 type ASCIIArtCharRender struct {

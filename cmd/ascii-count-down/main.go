@@ -8,8 +8,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/apocelips/ascii-count-down/pkg/render"
-	"github.com/apocelips/ascii-count-down/pkg/util"
+	"github.com/apocelipes/ascii-count-down/pkg/render"
+	"github.com/apocelipes/ascii-count-down/pkg/util"
 )
 
 func main() {
@@ -71,6 +71,7 @@ func main() {
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 
 	ticker := time.NewTicker(500 * time.Millisecond)
+	defer ticker.Stop()
 
 	fmt.Printf("距离 %s 还有: \n\n", until.Format("2006-01-02 15:04:05"))
 	for now.Before(until) {
