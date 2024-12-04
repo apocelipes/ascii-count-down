@@ -97,7 +97,7 @@ func main() {
 			util.CursorUp(terminalRender.RenderHeight())
 			terminalRender.RenderContent(0)
 			util.PrintlnRed("\ncount down canceled")
-			os.Exit(0)
+			return
 		case <-ticker.C:
 		}
 	}
