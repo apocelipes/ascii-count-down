@@ -36,9 +36,6 @@ func main() {
 	default:
 		panic("unknown type: " + *typeArg)
 	}
-	if err := terminalRender.CanRender(); err != nil {
-		panic(err)
-	}
 
 	now := time.Now()
 	var until time.Time
@@ -63,6 +60,9 @@ func main() {
 			panic("supports at most 99h59m59s")
 		}
 		until = now.Add(duration)
+	}
+	if err := terminalRender.CanRender(until.Sub(now).Truncate(time.Second)); err != nil {
+		panic(err)
 	}
 
 	flashing := false

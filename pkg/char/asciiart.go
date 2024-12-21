@@ -93,9 +93,12 @@ var ASCIIArtChars = [][]string{
 
 const ASCIIArtColonIdx = 10
 
-func MaxASCIIArtCharWidth() int {
+func MaxASCIIArtCharWidth(until int) int {
+	if until > 9 || until < 0 {
+		return 0
+	}
 	width := len(ASCIIArtChars[0][0])
-	for _, digit := range ASCIIArtChars {
+	for _, digit := range ASCIIArtChars[:until+1] {
 		width = max(width, len(digit[0]))
 	}
 	return width

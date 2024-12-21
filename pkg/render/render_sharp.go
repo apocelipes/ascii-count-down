@@ -56,7 +56,7 @@ func (sr *SharpCharRender) RenderFlashing() {
 	util.CursorDown(2)
 }
 
-func (sr *SharpCharRender) CanRender() error {
+func (sr *SharpCharRender) CanRender(_ time.Duration) error {
 	// 00:00:00, 6 digits, 2 colons, digit space width 1
 	maxWidth := char.MaxSharpCharWidth()*6 + 8*2 + 3
 	maxHeight := char.MaxSharpCharHeight() + 2 // +2 for the prompt

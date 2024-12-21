@@ -67,9 +67,39 @@ func (ar *ASCIIArtCharRender) RenderFlashing() {
 	util.CursorDown(1)
 }
 
-func (ar *ASCIIArtCharRender) CanRender() error {
+const asciiArtNonDigitTotalWidth = 7*2 + 3
+
+func calcNumWidth(num int, frontZero bool) int {
+	if !frontZero {
+		return char.MaxASCIIArtCharWidth(5) + char.MaxASCIIArtCharWidth(9)
+	}
+
+	if num >= 10 {
+		return char.MaxASCIIArtCharWidth(int(num)/10) + char.MaxASCIIArtCharWidth(9)
+	}
+	return char.MaxASCIIArtCharWidth(0) + char.MaxASCIIArtCharWidth(int(num)%10)
+}
+
+func asciiArtTotalWidth(d time.Duration) int {
+	maxWidth := 0
+	hours := d / time.Hour
+	maxWidth += calcNumWidth(int(hours), true)
+	allZero := hours == 0
+
+	d -= hours * time.Hour
+	minutes := d / time.Minute
+	maxWidth += calcNumWidth(int(minutes), allZero)
+	allZero = allZero && minutes == 0
+
+	seconds := d / time.Second
+	maxWidth += calcNumWidth(int(seconds), allZero)
+
 	// 00:00:00, 6 digits, 2 colons, digit space width 1
-	maxWidth := char.MaxASCIIArtCharWidth()*6 + 7*2 + 3
+	return maxWidth + asciiArtNonDigitTotalWidth
+}
+
+func (ar *ASCIIArtCharRender) CanRender(d time.Duration) error {
+	maxWidth := asciiArtTotalWidth(d)
 	maxHeight := char.MaxASCIIArtCharHeight() + 2 // +2 for the prompt
 	return util.CheckTerminal(int(os.Stdout.Fd()), maxWidth, maxHeight)
 }

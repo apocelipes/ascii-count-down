@@ -5,6 +5,6 @@ import "time"
 type TerminalRender interface {
 	RenderContent(duration time.Duration)
 	RenderFlashing()
-	CanRender() error
+	CanRender(duration time.Duration) error
 	RenderHeight() int
 }
