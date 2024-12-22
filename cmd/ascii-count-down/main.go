@@ -13,9 +13,9 @@ import (
 )
 
 func main() {
-	durationArg := flag.String("duration", "", "set the count down duration, same format as time.ParseDuration")
-	untilArg := flag.String("until", "", "wait until, the format is `HH:MM:SS`")
-	typeArg := flag.String("t", "sharp", `"sharp" or "asciiart", default is "sharp"`)
+	durationArg := util.StringFlagWithShortName("duration", "d", "", "set the count down duration, same format as time.ParseDuration")
+	untilArg := util.StringFlagWithShortName("until", "u", "", "wait until, the format is `HH:MM:SS`")
+	typeArg := util.StringFlagWithShortName("type", "t", "sharp", `"sharp" or "asciiart", default is "sharp"`)
 
 	flag.Parse()
 
